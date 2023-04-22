@@ -1,4 +1,3 @@
-
 package gestortareas;
 
 import java.util.ArrayList;
@@ -18,7 +17,10 @@ public class GestorTareas {
         String descripcion = sc.nextLine();
         System.out.println("Ingrese la fecha de vencimiento de la tarea:");
         String fechaVencimiento = sc.nextLine();
-        Tarea tarea = new Tarea(descripcion, fechaVencimiento);
+        System.out.println("Ingrese la prioridad de la tarea (alta/media/baja):"); // Nueva línea para solicitar la prioridad
+        String prioridad = sc.nextLine(); // Nueva línea para leer la prioridad ingresada
+        Tarea tarea = new Tarea(descripcion, fechaVencimiento, prioridad);
+        tarea.setPrioridad(prioridad); // Nueva línea para establecer la prioridad de la tarea
         tareas.add(tarea);
         System.out.println("Tarea agregada con éxito.");
     }
@@ -42,7 +44,7 @@ public class GestorTareas {
             Tarea tarea = tareas.get(i);
             if (!tarea.isCompletada()) {
                 System.out.println((i + 1) + ". " + tarea.getDescripcion() + " - Fecha de vencimiento: "
-                        + tarea.getFechaVencimiento());
+                        + tarea.getFechaVencimiento() + " - Prioridad: " + tarea.getPrioridad()); // Nueva línea para mostrar la prioridad
             }
         }
     }
@@ -70,7 +72,7 @@ public class GestorTareas {
             Tarea tarea = tareas.get(i);
             if (tarea.isCompletada()) {
                 System.out.println((i + 1) + ". " + tarea.getDescripcion() + " - Fecha de vencimiento: "
-                        + tarea.getFechaVencimiento());
+                        + tarea.getFechaVencimiento() + " - Prioridad: " + tarea.getPrioridad()); // Nueva línea para mostrar la prioridad
             }
         }
     }
@@ -81,9 +83,10 @@ public class GestorTareas {
         private String fechaVencimiento;
         private boolean completada;
 
-        public Tarea(String descripcion, String fechaVencimiento) {
+        public Tarea(String descripcion, String fechaVencimiento, String prioridad) {
             this.descripcion = descripcion;
             this.fechaVencimiento = fechaVencimiento;
+            this.prioridad = prioridad; // Añadir la prioridad al constructor
             this.completada = false;
         }
 
@@ -102,6 +105,17 @@ public class GestorTareas {
         public void setCompletada(boolean completada) {
             this.completada = completada;
         }
+
+        private String prioridad;
+
+        public String getPrioridad() {
+            return prioridad;
+        }
+
+        public void setPrioridad(String prioridad) {
+            this.prioridad = prioridad;
+        }
+
     }
 
     public static void main(String[] args) {
