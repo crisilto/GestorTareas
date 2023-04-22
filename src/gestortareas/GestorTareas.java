@@ -95,7 +95,7 @@ public class GestorTareas {
         System.out.println("2. Fecha de vencimiento");
         System.out.println("3. Prioridad");
         int opcion = sc.nextInt();
-        sc.nextLine(); // Limpiar el buffer del scanner
+        sc.nextLine();
 
         switch (opcion) {
             case 1:
@@ -119,6 +119,23 @@ public class GestorTareas {
             default:
                 System.out.println("Opción no válida.");
                 break;
+        }
+    }
+
+    public void mostrarTareasPorPrioridad() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Seleccione la prioridad de las tareas que desea mostrar (alta, media, baja): ");
+        String prioridadSeleccionada = sc.nextLine();
+        System.out.println("Tareas pendientes con prioridad " + prioridadSeleccionada + ":");
+        int contador = 1;
+        for (Tarea tarea : tareas) {
+            if (!tarea.isCompletada() && tarea.getPrioridad().equalsIgnoreCase(prioridadSeleccionada)) {
+                System.out.println(contador + ". " + tarea.getDescripcion() + " - Fecha de vencimiento: " + tarea.getFechaVencimiento() + " - Prioridad: " + tarea.getPrioridad());
+                contador++;
+            }
+        }
+        if (contador == 1) {
+            System.out.println("No se encontraron tareas pendientes con la prioridad seleccionada.");
         }
     }
 
@@ -161,11 +178,14 @@ public class GestorTareas {
         }
 
         public void setDescripcion(String nuevaDescripcion) {
-            // Lógica para establecer la descripción
         }
 
         public void setFechaVencimiento(String nuevaFechaVencimiento) {
-            // Lógica para establecer la fecha de vencimiento
+        }
+
+        @Override
+        public String toString() {
+            return "Descripción: " + this.descripcion + ", Prioridad: " + this.prioridad;
         }
 
     }
@@ -181,8 +201,9 @@ public class GestorTareas {
             System.out.println("3. Eliminar tarea completada");
             System.out.println("4. Mostrar tareas pendientes");
             System.out.println("5. Mostrar tareas completadas");
-            System.out.println("6. Editar tarea"); // Nueva opción para editar tarea
-            System.out.println("7. Salir");
+            System.out.println("6. Editar tarea");
+            System.out.println("7. Mostrar tareas por prioridad");
+            System.out.println("8. Salir");
             System.out.println("==========================");
             System.out.println("Seleccione una opción:");
             opcion = Integer.parseInt(sc.nextLine());
@@ -203,16 +224,19 @@ public class GestorTareas {
                     GestionTareasApp1.mostrarTareasCompletadas();
                     break;
                 case 6:
-                    GestionTareasApp1.editarTarea(); // Llamar al método para editar tarea
+                    GestionTareasApp1.editarTarea();
                     break;
                 case 7:
+                    GestionTareasApp1.mostrarTareasPorPrioridad();
+                    break;
+                case 8:
                     System.out.println("Hasta luego!");
                     break;
                 default:
                     System.out.println("Opción inválida. Intente nuevamente.");
                     break;
             }
-        } while (opcion != 7);
+        } while (opcion != 8);
         sc.close();
     }
 }
